@@ -45,7 +45,8 @@ function onInput(e){
     console.log(markup);
     articleEl.innerHTML = markup;
 })
- .catch((error) => {alert('Nothing found')})}
+//  .catch((error) => {alert('Nothing found')})
+}
 
 // function appendContriesMarkup(countries){
 //     articleEl.insertAdjacentHTML('beforeend', countriesTmpl(countries))
