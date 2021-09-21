@@ -25,3 +25,31 @@
   background-size: cover;
   background-position: center;
 }
+
+.input_label {
+  display: block;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.input_country {
+  display: block;
+  margin-top: 10px;
+}
+
+.flag {
+  display: flex;
+  position: absolute;
+  top: 0px;
+  left: 250px;
+}
+
+.country-descr {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.countries_list {
+  position: relative;
+  width: 260px;
+}
