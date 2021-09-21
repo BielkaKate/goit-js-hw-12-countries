@@ -1,6 +1,7 @@
 import './sass/main.scss';
 import fetchCountries from "./js/fetchCountries"
 import countriesTmpl from "./templates/countriesTmpl.hbs"
+import countryTmpl from './templates/countryTmpl.hbs'
 
 import { alert, error, defaultModules } from '@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
@@ -11,43 +12,27 @@ defaultModules.set(PNotifyMobile, {});
 const { debounce, result } = require("lodash")
 
 const inputEl = document.querySelector(".input_country")
-const articleEl = document.querySelector(".countries_list")
+const countriesList = document.querySelector(".countries_list")
+const countryInfo = document.querySelector(".country")
 
 inputEl.addEventListener("input", debounce(onInput, 500))
 function onInput(e){
     fetchCountries(e.target.value)
-    // .then(appendContriesMarkup)
-    .then((array) => {
+    .then(array => {
         if(array.length === 1){
-            const countryMarkup = array.map((item) => {
-                console.log(item); 
-                return `<li class = "country-descr"><h1>${item.name}</h1></li>
-                <li class = "country-descr"><b>Capital: </b>${item.capital}</li>
-                <li class = "country-descr"><b>Population: </b>${item.population}</li>
-                <li class = "country-descr"><b>Languages: </b>
-                    <ul>
-                        <li>${item.languages[0].nativeName}</li>
-                    </ul>
-                </li>
-                <li class = "flag"><img src = ${item.flag} width = "250"></img></li>`})
-                return countryMarkup;
-        } else {if (array.length >= 10){
-            error({ text: 'To many mathes found. Enter a more specific query, please!'})
-            return null;
+            countriesList.innerHTML = ""
+            return (countryInfo.innerHTML = countryTmpl(...array))
+            
         }
-        console.log(array);
-        const markup = array.map((item) => {
-        console.log(item.name); 
-        return `<li>${item.name}</li>`})
-        return markup.join("");
-    }})
-.then((markup) => {
-    console.log(markup);
-    articleEl.innerHTML = markup;
-})
-//  .catch((error) => {alert('Nothing found')})
+        if(array.length >= 2 && array.length <= 10){
+            countryInfo.innerHTML = ""
+            return (countriesList.innerHTML = countriesTmpl(array))
+            
+        }
+        error({ text: 'To many mathes found. Enter a more specific query, please!'})
+    })
+    .catch(error => {
+     alert('Nothing found');
+});
 }
 
-// function appendContriesMarkup(countries){
-//     articleEl.insertAdjacentHTML('beforeend', countriesTmpl(countries))
-// }

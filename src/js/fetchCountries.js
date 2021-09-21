@@ -13,9 +13,11 @@ function fetchCountries(query){
                 // alert('Nothing found');
                 throw Error(response.status);               
             }
-        }).then(data => {
-            return(data)}
-            )
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        
             // .catch((error) => {console.log(error);
             //     alert('Nothing found')
             // if (query === ''){alert.clear()}})
